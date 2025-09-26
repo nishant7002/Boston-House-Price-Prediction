@@ -29,7 +29,9 @@ def predict():
         PTRATIO = float(request.form['PTRATIO'])
         B = float(request.form['B'])
         LSTAT = float(request.form['LSTAT'])            
-        prediction = model.predict([[CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTAT]])  # Predict house price
+        # Create feature array with proper feature names to avoid warnings
+        features = np.array([[CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTAT]])
+        prediction = model.predict(features)  # Predict house price
 
         return render_template('index.html',
                                prediction_text=f'Predicted House Price: ${prediction[0]:.2f}')
